@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кинотеатр</title>
+</head>
+<body>
+    
+
+    <h1>Список фильмов</h1>
+    <form action="/add_film" method="post">
+        <input type="text" name="film_name" placeholder="Название фильма" required>
+        <input type="text" name="cinema_name" placeholder="Название кинотеатра" required>
+        <button type="submit">Добавить фильм</button>
+    </form>
+
+    <h2>Фильмы</h2>
+    <ul>
+        {% for film in films %}
+            <li>
+                ID: {{ film[0] }} | Фильм: {{ film[1] }} | Кинотеатр: {{ film[2] }} | Кол-во билетов: {{ film[3] }}
+                <form action="/buy_ticket/{{ film[0] }}" method="post" style="display:inline;">
+                    <button type="submit">Купить билет</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
